@@ -1,22 +1,33 @@
-import logo from './logo.svg';
+import React, { useState } from 'react'
 import './App.css';
 
 function App() {
+  const [color, setColor] = useState("#ffffff")
+  const changeColor = () => {
+    const widthRaw = window.innerWidth || 0
+    const heightRaw = window.innerHeight || 0
+    const width = widthRaw > 4095 ? 4095 : widthRaw
+    const height = heightRaw > 4095 ? 4095 : heightRaw
+    const widthStringRaw = width.toString(16)
+    const heightStringRaw = height.toString(16)
+    const heightString = heightStringRaw.length === 1 
+      ? `00${heightStringRaw}` 
+      : heightStringRaw.length === 2
+        ? `0${heightStringRaw}`
+        : `${heightStringRaw}`
+    const widthString = widthStringRaw.length === 1 
+      ? `00${widthStringRaw}` 
+      : widthStringRaw.length === 2
+        ? `0${widthStringRaw}`
+        : `${widthStringRaw}`
+    const myColor = "#" + widthString + heightString
+    setColor(myColor)
+  }
+  window.addEventListener("load", changeColor)
+  window.addEventListener("resize", changeColor)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header className="App-header" style={{ backgroundColor: color }}>
       </header>
     </div>
   );
